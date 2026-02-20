@@ -1,4 +1,7 @@
-package io.gitub.hyscript7.drony.domain;
+package io.gitub.hyscript7.drony.factory;
+
+import io.gitub.hyscript7.drony.domain.ResourceFactory;
+import io.gitub.hyscript7.drony.domain.SkladBuilder;
 
 public class SkladDirector {
     private final ResourceFactory resourceFactory;

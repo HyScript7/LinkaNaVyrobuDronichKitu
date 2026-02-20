@@ -1,8 +1,10 @@
-package io.gitub.hyscript7.drony.workers;
+package io.gitub.hyscript7.drony.factory;
 
 import io.gitub.hyscript7.drony.Log;
 import io.gitub.hyscript7.drony.domain.ResourceFactory;
 import io.gitub.hyscript7.drony.domain.Sklad;
+import io.gitub.hyscript7.drony.workers.CounterImpl;
+import io.gitub.hyscript7.drony.workers.WorkerBuilder;
 
 public class WorkerDirector {
     private final Sklad sklad;
