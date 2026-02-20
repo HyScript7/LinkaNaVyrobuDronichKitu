@@ -14,15 +14,15 @@ public class WorkerDirector {
     }
 
     public void buildRamWorker(WorkerBuilder builder) {
-        builder.reset().sklad(sklad).logger(new Log("VYROBCE-RAM")).komponenta(resourceFactory.createRam()).pocitadlo(new CounterImpl());
+        builder.reset().sklad(sklad).logger(new Log("VYROBCE-RAM")).komponenta(resourceFactory.createRam()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
     public void buildSadaVrtuliWorker(WorkerBuilder builder) {
-        builder.reset().sklad(sklad).logger(new Log("VYROBCE-VRTULE")).komponenta(resourceFactory.createSadaVrtuli()).pocitadlo(new CounterImpl());
+        builder.reset().sklad(sklad).logger(new Log("VYROBCE-VRTULE")).komponenta(resourceFactory.createSadaVrtuli()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
     public void buildRidiciDeskaWorker(WorkerBuilder builder) {
-        builder.reset().sklad(sklad).logger(new Log("VYROBCE-DESKA")).komponenta(resourceFactory.createRidiciDeska()).pocitadlo(new CounterImpl());
+        builder.reset().sklad(sklad).logger(new Log("VYROBCE-DESKA")).komponenta(resourceFactory.createRidiciDeska()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
     public void buildKitWorker(WorkerBuilder builder) {

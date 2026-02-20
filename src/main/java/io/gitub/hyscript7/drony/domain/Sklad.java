@@ -36,6 +36,10 @@ public class Sklad {
         this.materials.put(material, this.materials.getOrDefault(material, 0) + amount);
     }
 
+    public synchronized int getAmount(Material material) {
+        return this.materials.getOrDefault(material, 0);
+    }
+
     /**
      * @return Vrátí neměnnou mapu (<b>View</b>) se skladem
      */

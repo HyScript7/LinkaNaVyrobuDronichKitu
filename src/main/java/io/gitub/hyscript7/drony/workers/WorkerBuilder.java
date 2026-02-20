@@ -19,5 +19,7 @@ public interface WorkerBuilder {
 
     WorkerBuilder logger(Log logger);
 
+    WorkerBuilder threshold(int threshold);
+
     BaseWorker getResult();
 }

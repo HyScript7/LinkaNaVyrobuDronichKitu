@@ -14,6 +14,7 @@ public class WorkerBuilderImpl implements WorkerBuilder {
     private String zpravaPriVyrobeni;
     private Counter counter;
     private Log log;
+    private int upperBoundThreshold;
 
     @Override
     public WorkerBuilder reset() {
@@ -23,6 +24,7 @@ public class WorkerBuilderImpl implements WorkerBuilder {
         this.zpravaPriVyrobeni = DEFAULTNI_ZPRAVA_VYROBA;
         this.counter = null;
         this.log = null;
+        this.upperBoundThreshold = Integer.MAX_VALUE;
         return this;
     }
 
@@ -62,6 +64,12 @@ public class WorkerBuilderImpl implements WorkerBuilder {
         return this;
     }
 
+    @Override
+    public WorkerBuilder threshold(int threshold) {
+        this.upperBoundThreshold = threshold;
+        return this;
+    }
+
     public BaseWorker getResult() {
         if (sklad == null) {
             throw new IllegalStateException("Sklad musí být určen!");
@@ -75,6 +83,6 @@ public class WorkerBuilderImpl implements WorkerBuilder {
         if (log == null) {
             throw new IllegalStateException("Logger musí být určen!");
         }
-        return new Worker(log, komponenta, sklad, zpravaPriCekani, zpravaPriVyrobeni, counter);
+        return new Worker(log, komponenta, sklad, zpravaPriCekani, zpravaPriVyrobeni, counter, upperBoundThreshold);
     }
 }

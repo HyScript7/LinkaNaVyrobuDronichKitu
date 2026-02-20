@@ -10,13 +10,17 @@ public class Worker extends BaseWorker {
     private final String zpravaPriCekani;
     private final String zpravaPriVyrobeni;
     private final Counter counter;
+    private final int stopAfter;
 
-    public Worker(Log logger, Komponenta komponenta, Sklad sklad, String zpravaPriCekani, String zpravaPriVyrobeni, Counter counter) {
+    public Worker(Log logger, Komponenta komponenta, Sklad sklad, String zpravaPriCekani, String zpravaPriVyrobeni, Counter counter, int stopAfter) {
         super(logger, komponenta, sklad);
         this.zpravaPriCekani = zpravaPriCekani;
         this.zpravaPriVyrobeni = zpravaPriVyrobeni;
         this.counter = counter;
+        this.stopAfter = stopAfter;
     }
+
+    private static final Log manager = new Log("Manager");
 
     @Override
     protected void work() {
@@ -26,16 +30,23 @@ public class Worker extends BaseWorker {
                     logger.debug("Thread is interrupted, returning!");
                     return;
                 }
-                if (sklad.procure(komponenta.getRecept())) {
+                if (sklad.getAmount(komponenta) > stopAfter) {
+                    manager.info("pozastavil výrobu: " + komponenta);
+                }
+                else if (sklad.procure(komponenta.getRecept())) {
                     sklad.supply(komponenta, 1);
                     counter.increment();
                     logger.info(zpravaPriVyrobeni.replaceFirst("\\{}", komponenta.getNazev()).replaceFirst("\\{}", String.valueOf(counter.getCount())));
+                } else {
+                    logger.info(zpravaPriCekani.replaceFirst("\\{}", this.komponenta.getNazev()));
                 }
-                logger.info(zpravaPriCekani.replaceFirst("\\{}", this.komponenta.getNazev()));
                 Thread.sleep(Duration.ofSeconds(1));
             }
         } catch (InterruptedException e) {
-            logger.error("Worker interrupted: " + e.getMessage() + " caused by " + e.getCause());
+            if (e.getCause() == null) {
+                return;
+            }
+            logger.error("Worker interrupted unexpectedly: " + e.getMessage() + " caused by " + e.getCause());
         }
     }
 }

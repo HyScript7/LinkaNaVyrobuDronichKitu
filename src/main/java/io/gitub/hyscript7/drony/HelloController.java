@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -47,6 +48,9 @@ public class HelloController {
     @FXML
     private TableColumn<Map.Entry<Material, Integer>, Integer> amountColumn;
 
+    @FXML
+    private Button pauseButton;
+
     private final ObservableList<Map.Entry<Material, Integer>> tableData = FXCollections.observableArrayList();
 
     @FXML
@@ -66,18 +70,40 @@ public class HelloController {
         sklad.addListener(obs -> Platform.runLater(() -> renderTable(sklad.getStatus())));
 
         renderTable(sklad.getStatus());
+        pauseButton.setText("Resume");
     }
 
     @FXML
     protected void onStartButtonClick() {
-        logger.info("start");
+        if (!paused) {
+            return;
+        }
+        paused = false;
+        pauseButton.setText("Pause");
+        logger.info("START");
         droneFactory.start();
     }
 
     @FXML
     protected void onStopButtonClick() {
-        logger.info("stop");
+        if (paused) {
+            return;
+        }
+        paused = true;
+        pauseButton.setText("Resume");
+        logger.info("STOP");
         droneFactory.stop();
+    }
+
+    private boolean paused = true;
+
+    @FXML
+    protected void onPauseButtonClick() {
+        if (paused) {
+            onStartButtonClick();
+        } else {
+            onStopButtonClick();
+        }
     }
 
     private final List<Material> orderedList;
