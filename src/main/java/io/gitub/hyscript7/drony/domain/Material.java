@@ -23,4 +23,9 @@ public class Material {
     public int hashCode() {
         return Objects.hashCode(nazev);
     }
+
+    @Override
+    public String toString() {
+        return nazev;
+    }
 }

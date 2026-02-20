@@ -24,6 +24,8 @@ public abstract class BaseWorker {
             throw new IllegalStateException("Worker is already running!");
         }
         this.thread = new Thread(this::work);
+        this.thread.start();
+        logger.debug("Thread started!");
     }
 
     public void stop() throws InterruptedException, IllegalStateException {
@@ -34,7 +36,7 @@ public abstract class BaseWorker {
         if (this.thread.join(Duration.ofSeconds(5))) {
             this.thread = null;
         } else {
-            // TODO: Vypiš hlášku o timeoutu do konzole
+            logger.error("Čekání na zastavení workeru překročilo časový limit.");
         }
     }
 

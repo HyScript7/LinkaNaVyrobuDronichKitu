@@ -23,6 +23,7 @@ public class Worker extends BaseWorker {
         try {
             while (true) {
                 if (Thread.currentThread().isInterrupted()) {
+                    logger.debug("Thread is interrupted, returning!");
                     return;
                 }
                 if (sklad.procure(komponenta.getRecept())) {
@@ -33,7 +34,8 @@ public class Worker extends BaseWorker {
                 logger.info(zpravaPriCekani.replaceFirst("\\{}", this.komponenta.getNazev()));
                 Thread.sleep(Duration.ofSeconds(1));
             }
-        } catch (InterruptedException ignored) {
+        } catch (InterruptedException e) {
+            logger.error("Worker interrupted: " + e.getMessage() + " caused by " + e.getCause());
         }
     }
 }

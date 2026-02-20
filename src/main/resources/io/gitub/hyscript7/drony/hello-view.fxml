@@ -14,17 +14,16 @@
          <font>
             <Font size="17.0" />
          </font></Label>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-         </children>
-      </HBox>
+      <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Objekt" fx:id="materialColumn" />
+          <TableColumn prefWidth="75.0" text="Počet" fx:id="amountColumn" />
+        </columns>
+      </TableView>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" text="Start" />
-            <Button mnemonicParsing="false" text="Stop" />
-            <Button mnemonicParsing="false" text="Pauza" />
+            <Button mnemonicParsing="false" onAction="#onStartButtonClick" text="Start" />
+            <Button mnemonicParsing="false" onAction="#onStopButtonClick" text="Stop" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

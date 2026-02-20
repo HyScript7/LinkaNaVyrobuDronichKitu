@@ -26,11 +26,13 @@ public class DroneFactory {
             workerBuilder.logger(new Log("SESTAVITEL-" + assemblerNumber)).pocitadlo(assemblerCounter);
             this.workers.add(workerBuilder.getResult());
         }
+        logger.debug("Created " + workers.size() + " workers!");
     }
 
     public void start() {
         logger.info("START");
         for (BaseWorker worker : workers) {
+            logger.debug("Starting worker " + worker.toString());
             worker.start();
         }
     }
@@ -39,8 +41,10 @@ public class DroneFactory {
         logger.info("STOP");
         for (BaseWorker worker : workers) {
             try {
+                logger.debug("Stopping worker " + worker.toString());
                 worker.stop();
-            } catch (InterruptedException ignored) {
+            } catch (InterruptedException e) {
+                logger.error("Stopping worker failed: " + e.getMessage());
             }
         }
     }
