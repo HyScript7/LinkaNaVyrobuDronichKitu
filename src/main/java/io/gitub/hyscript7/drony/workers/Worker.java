@@ -30,15 +30,15 @@ public class Worker extends BaseWorker {
                     logger.debug("Thread is interrupted, returning!");
                     return;
                 }
-                if (sklad.getAmount(komponenta) > stopAfter) {
+                if (sklad.getAmount(komponenta) >= stopAfter) {
                     manager.info("pozastavil výrobu: " + komponenta);
                 }
                 else if (sklad.procure(komponenta.getRecept())) {
                     sklad.supply(komponenta, 1);
                     counter.increment();
-                    logger.info(zpravaPriVyrobeni.replaceFirst("\\{}", komponenta.getNazev()).replaceFirst("\\{}", String.valueOf(counter.getCount())));
+                    logger.info(zpravaPriVyrobeni.replaceFirst("\\[[Tt][Yy][Pp]]", komponenta.getNazev()).replaceFirst("\\{#}", String.valueOf(counter.getCount())));
                 } else {
-                    logger.info(zpravaPriCekani.replaceFirst("\\{}", this.komponenta.getNazev()));
+                    logger.info(zpravaPriCekani.replaceFirst("(\\{}|\\[[Tt][Yy][Pp]])", this.komponenta.getNazev()));
                 }
                 Thread.sleep(Duration.ofSeconds(1));
             }

@@ -36,7 +36,7 @@ public class HelloController {
         skladDirector.createDefaultSklad(skladFxBuilder);
         this.sklad = skladFxBuilder.build();
         this.droneFactory = new DroneFactory(new WorkerDirector(sklad, rf), new WorkerBuilderImpl(), 2);
-        this.orderedList = List.of(rf.createHlinik(), rf.createPlast(), rf.createChips(), rf.createRam(), rf.createSadaVrtuli(), rf.createRidiciDeska(), rf.createKit());
+        this.orderedList = List.of(rf.createKit(), rf.createHlinik(), rf.createPlast(), rf.createChips(), rf.createRam(), rf.createSadaVrtuli(), rf.createRidiciDeska());
     }
 
     @FXML

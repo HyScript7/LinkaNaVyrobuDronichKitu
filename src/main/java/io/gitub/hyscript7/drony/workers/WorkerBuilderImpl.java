@@ -5,8 +5,8 @@ import io.gitub.hyscript7.drony.domain.Komponenta;
 import io.gitub.hyscript7.drony.domain.Sklad;
 
 public class WorkerBuilderImpl implements WorkerBuilder {
-    private static final String DEFAULTNI_ZPRAVA = "čeká na materiál pro: {}";
-    private static final String DEFAULTNI_ZPRAVA_VYROBA = "vyrobil KOMPONENTU: {} (celkem={})";
+    private static final String DEFAULTNI_ZPRAVA = "čeká na materiál pro: [TYP]";
+    private static final String DEFAULTNI_ZPRAVA_VYROBA = "vyrobil KOMPONENTU: [TYP] (celkem={#})";
 
     private Sklad sklad;
     private Komponenta komponenta;

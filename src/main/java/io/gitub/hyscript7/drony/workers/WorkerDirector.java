@@ -26,6 +26,6 @@ public class WorkerDirector {
     }
 
     public void buildKitWorker(WorkerBuilder builder) {
-        builder.reset().sklad(sklad).zpravaPriCekani("čeká na komponenty").zpravaPriSestaveni("sestavil KIT #{}").komponenta(resourceFactory.createKit());
+        builder.reset().sklad(sklad).zpravaPriCekani("čeká na komponenty").zpravaPriSestaveni("sestavil KIT #{#}").komponenta(resourceFactory.createKit());
     }
 }
