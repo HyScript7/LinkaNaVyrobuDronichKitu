@@ -24,6 +24,7 @@ public abstract class BaseWorker {
             throw new IllegalStateException("Worker is already running!");
         }
         this.thread = new Thread(this::work);
+        this.thread.setDaemon(true);
         this.thread.start();
         logger.debug("Thread started!");
     }
