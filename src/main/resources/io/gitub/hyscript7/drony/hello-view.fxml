@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.gitub.hyscript7.drony.HelloController">
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.gitub.hyscript7.drony.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -16,15 +21,21 @@
          </font></Label>
       <TableView fx:id="table" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Objekt" fx:id="materialColumn" />
-          <TableColumn prefWidth="75.0" text="Počet" fx:id="amountColumn" />
+          <TableColumn fx:id="materialColumn" prefWidth="75.0" text="Objekt" />
+          <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Počet" />
         </columns>
       </TableView>
+      <HBox>
+         <children>
+            <Label text="Cíl Výroby (Droních kitů):" />
+            <TextField fx:id="productionTargetTextField" promptText="Počet dronů k výrobě" text="0" />
+         </children>
+      </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button mnemonicParsing="false" onAction="#onStartButtonClick" text="Start" />
             <Button mnemonicParsing="false" onAction="#onStopButtonClick" text="Stop" />
-             <Button mnemonicParsing="false" onAction="#onPauseButtonClick" fx:id="pauseButton" text="Pause" />
+             <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#onPauseButtonClick" text="Pause" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

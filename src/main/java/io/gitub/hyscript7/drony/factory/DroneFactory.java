@@ -4,6 +4,7 @@ import io.gitub.hyscript7.drony.Log;
 import io.gitub.hyscript7.drony.workers.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DroneFactory {
@@ -14,6 +15,10 @@ public class DroneFactory {
         this.workers = new ArrayList<>();
         this.workers.addAll(workers);
         this.logger = new Log("SYSTEM");
+    }
+
+    public List<BaseWorker> getWorkers() {
+        return Collections.unmodifiableList(workers);
     }
 
     public void start() {

@@ -3,18 +3,18 @@ package io.gitub.hyscript7.drony.workers;
 import io.gitub.hyscript7.drony.Log;
 import io.gitub.hyscript7.drony.domain.Komponenta;
 import io.gitub.hyscript7.drony.domain.Sklad;
+import lombok.Getter;
 
 import java.time.Duration;
 
 public abstract class BaseWorker {
+    @Getter
     protected final Log logger;
-    protected final Komponenta komponenta;
     protected final Sklad sklad;
     protected Thread thread;
 
-    public BaseWorker(Log logger, Komponenta komponenta, Sklad sklad) {
+    public BaseWorker(Log logger, Sklad sklad) {
         this.logger = logger;
-        this.komponenta = komponenta;
         this.thread = null;
         this.sklad = sklad;
     }
@@ -24,6 +24,7 @@ public abstract class BaseWorker {
             throw new IllegalStateException("Worker is already running!");
         }
         this.thread = new Thread(this::work);
+        this.thread.setName(logger.getName());
         this.thread.setDaemon(true);
         this.thread.start();
         logger.debug("Thread started!");

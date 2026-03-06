@@ -4,7 +4,9 @@ import io.gitub.hyscript7.drony.Log;
 import io.gitub.hyscript7.drony.domain.Komponenta;
 import io.gitub.hyscript7.drony.domain.Sklad;
 
-public class WorkerBuilderImpl implements WorkerBuilder {
+import java.time.Duration;
+
+public class ComponentWorkerBuilderImpl implements ComponentWorkerBuilder {
     private static final String DEFAULTNI_ZPRAVA = "čeká na materiál pro: [TYP]";
     private static final String DEFAULTNI_ZPRAVA_VYROBA = "vyrobil KOMPONENTU: [TYP] (celkem={#})";
 
@@ -15,9 +17,10 @@ public class WorkerBuilderImpl implements WorkerBuilder {
     private Counter counter;
     private Log log;
     private int upperBoundThreshold;
+    private Duration successDelay;
 
     @Override
-    public WorkerBuilder reset() {
+    public ComponentWorkerBuilder reset() {
         this.sklad = null;
         this.komponenta = null;
         this.zpravaPriCekani = DEFAULTNI_ZPRAVA;
@@ -25,48 +28,55 @@ public class WorkerBuilderImpl implements WorkerBuilder {
         this.counter = null;
         this.log = null;
         this.upperBoundThreshold = Integer.MAX_VALUE;
+        this.successDelay = null;
         return this;
     }
 
     @Override
-    public WorkerBuilder sklad(Sklad sklad) {
+    public ComponentWorkerBuilder sklad(Sklad sklad) {
         this.sklad = sklad;
         return this;
     }
 
     @Override
-    public WorkerBuilder komponenta(Komponenta komponenta) {
+    public ComponentWorkerBuilder komponenta(Komponenta komponenta) {
         this.komponenta = komponenta;
         return this;
     }
 
     @Override
-    public WorkerBuilder zpravaPriCekani(String zprava) {
+    public ComponentWorkerBuilder zpravaPriCekani(String zprava) {
         this.zpravaPriCekani = zprava;
         return this;
     }
 
     @Override
-    public WorkerBuilder zpravaPriSestaveni(String zprava) {
+    public ComponentWorkerBuilder zpravaPriSestaveni(String zprava) {
         this.zpravaPriVyrobeni = zprava;
         return this;
     }
 
     @Override
-    public WorkerBuilder pocitadlo(Counter counter) {
+    public ComponentWorkerBuilder pocitadlo(Counter counter) {
         this.counter = counter;
         return this;
     }
 
     @Override
-    public WorkerBuilder logger(Log log) {
+    public ComponentWorkerBuilder logger(Log log) {
         this.log = log;
         return this;
     }
 
     @Override
-    public WorkerBuilder threshold(int threshold) {
+    public ComponentWorkerBuilder threshold(int threshold) {
         this.upperBoundThreshold = threshold;
+        return this;
+    }
+
+    @Override
+    public ComponentWorkerBuilder successDelay(Duration delay) {
+        this.successDelay = delay;
         return this;
     }
 
@@ -83,6 +93,10 @@ public class WorkerBuilderImpl implements WorkerBuilder {
         if (log == null) {
             throw new IllegalStateException("Logger musí být určen!");
         }
-        return new Worker(log, komponenta, sklad, zpravaPriCekani, zpravaPriVyrobeni, counter, upperBoundThreshold);
+        if (successDelay != null) {
+            return new ComponentWorker(log, komponenta, sklad, zpravaPriCekani, zpravaPriVyrobeni, counter, upperBoundThreshold, successDelay);
+        } else {
+            return new ComponentWorker(log, komponenta, sklad, zpravaPriCekani, zpravaPriVyrobeni, counter, upperBoundThreshold);
+        }
     }
 }

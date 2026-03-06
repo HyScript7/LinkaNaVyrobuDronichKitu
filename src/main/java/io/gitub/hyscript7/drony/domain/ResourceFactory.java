@@ -29,6 +29,7 @@ public class ResourceFactory {
         return new KomponentaBuilder().setNazev("Řídící deska")
                 .addIngredient(createChips(), 2)
                 .addIngredient(createHlinik(), 10)
+                .addIngredient(createPlast(), 5) // T4 - Plast
                 .build();
     }
 

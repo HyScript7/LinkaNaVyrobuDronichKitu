@@ -4,7 +4,7 @@ import io.gitub.hyscript7.drony.Log;
 import io.gitub.hyscript7.drony.domain.ResourceFactory;
 import io.gitub.hyscript7.drony.domain.Sklad;
 import io.gitub.hyscript7.drony.workers.CounterImpl;
-import io.gitub.hyscript7.drony.workers.WorkerBuilder;
+import io.gitub.hyscript7.drony.workers.ComponentWorkerBuilder;
 
 public class WorkerDirector {
     private final Sklad sklad;
@@ -15,19 +15,19 @@ public class WorkerDirector {
         this.resourceFactory = resourceFactory;
     }
 
-    public void buildRamWorker(WorkerBuilder builder) {
+    public void buildRamWorker(ComponentWorkerBuilder builder) {
         builder.reset().sklad(sklad).logger(new Log("VYROBCE-RAM")).komponenta(resourceFactory.createRam()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
-    public void buildSadaVrtuliWorker(WorkerBuilder builder) {
+    public void buildSadaVrtuliWorker(ComponentWorkerBuilder builder) {
         builder.reset().sklad(sklad).logger(new Log("VYROBCE-VRTULE")).komponenta(resourceFactory.createSadaVrtuli()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
-    public void buildRidiciDeskaWorker(WorkerBuilder builder) {
+    public void buildRidiciDeskaWorker(ComponentWorkerBuilder builder) {
         builder.reset().sklad(sklad).logger(new Log("VYROBCE-DESKA")).komponenta(resourceFactory.createRidiciDeska()).pocitadlo(new CounterImpl()).threshold(30);
     }
 
-    public void buildKitWorker(WorkerBuilder builder) {
+    public void buildKitWorker(ComponentWorkerBuilder builder) {
         builder.reset().sklad(sklad).zpravaPriCekani("čeká na komponenty").zpravaPriSestaveni("sestavil KIT #{#}").komponenta(resourceFactory.createKit());
     }
 }

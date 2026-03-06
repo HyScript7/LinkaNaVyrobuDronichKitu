@@ -1,6 +1,9 @@
 package io.gitub.hyscript7.drony;
 
+import lombok.Getter;
+
 public class Log {
+    @Getter
     private final String name;
     private final Level level;
 
@@ -48,8 +51,14 @@ public class Log {
 
     private void println(String msg) {
         if (name != null) {
-            System.out.print("[" + name + "] ");
+            msg = "[" + name + "] " + msg.stripTrailing();
+        } else {
+            msg = msg.stripTrailing();
         }
-        System.out.print(msg.stripTrailing() + "\n");
+        syncPrintln(msg);
+    }
+
+    private synchronized static void syncPrintln(String msg) {
+        System.out.println(msg);
     }
 }
